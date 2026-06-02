@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 
 // Import Routes
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/customers', require('./routes/customerRoutes'));
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
