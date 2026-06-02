@@ -58,6 +58,31 @@ const callApi = async (serverCall, mockCall) => {
 };
 
 export const api = {
+  // Customer Auth
+  customerRegister: async (customerData) => {
+    const response = await axios.post('http://localhost:5050/api/customers/register', customerData);
+    return response.data;
+  },
+  customerLogin: async (email, password) => {
+    const response = await axios.post('http://localhost:5050/api/customers/login', { email, password });
+    return response.data;
+  },
+  updateCustomerProfile: async (profileData) => {
+    const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.put('http://localhost:5050/api/customers/profile', profileData, {
+      headers: { Authorization: `Bearer ${customerInfo?.token}` }
+    });
+    return response.data;
+  },
+  deleteCustomerProfile: async () => {
+    const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.delete('http://localhost:5050/api/customers/profile', {
+      headers: { Authorization: `Bearer ${customerInfo?.token}` }
+    });
+    return response.data;
+  },
+
+  // Admin Auth
   login: async (email, password) => {
     return callApi(
       () => axios.post('http://localhost:5050/api/admin/login', { email, password }),

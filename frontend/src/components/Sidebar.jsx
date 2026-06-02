@@ -63,7 +63,8 @@ const Sidebar = () => {
       {/* Nav links */}
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flex: 1 }}>
         <NavLink
-          to="/"
+          to="/admin"
+          end
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <LayoutDashboard size={18} />
@@ -71,7 +72,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/registrations"
+          to="/admin/registrations"
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <UserCheck size={18} />
@@ -79,7 +80,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/categories"
+          to="/admin/categories"
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <FolderHeart size={18} />
@@ -87,7 +88,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/subscriptions"
+          to="/admin/subscriptions"
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <CreditCard size={18} />
@@ -95,7 +96,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/reviews"
+          to="/admin/reviews"
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <Star size={18} />
@@ -103,7 +104,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/support"
+          to="/admin/support"
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <LifeBuoy size={18} />
