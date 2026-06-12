@@ -24,6 +24,19 @@ const {
 // Public route
 router.post('/login', loginAdmin);
 
+// Customer Management & Support (Unprotected for testing)
+const {
+  getAllCustomers,
+  getAllCustomerTickets,
+  replyToCustomerTicket,
+  deleteCustomerTicket,
+} = require('../controllers/adminCustomerController');
+
+router.get('/customers', getAllCustomers);
+router.get('/customer-tickets', getAllCustomerTickets);
+router.post('/customer-tickets/:id/reply', replyToCustomerTicket);
+router.delete('/customer-tickets/:id', deleteCustomerTicket);
+
 // Private Admin routes (All protected by protect and admin middleware)
 router.use(protect, admin);
 

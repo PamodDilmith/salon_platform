@@ -23,9 +23,9 @@ axiosInstance.interceptors.request.use((config) => {
 export const getApiMode = () => {
   const savedMode = localStorage.getItem('api_mode');
   if (!savedMode) {
-    // If not set, default to 'mock' as local DB is not seeded/configured yet
-    localStorage.setItem('api_mode', 'mock');
-    return 'mock';
+    // Default to 'live' since backend and DB are now active
+    localStorage.setItem('api_mode', 'live');
+    return 'live';
   }
   return savedMode;
 };
@@ -77,6 +77,42 @@ export const api = {
   deleteCustomerProfile: async () => {
     const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
     const response = await axios.delete('http://localhost:5050/api/customers/profile', {
+      headers: { Authorization: `Bearer ${customerInfo?.token}` }
+    });
+    return response.data;
+  },
+
+  // Customer Tickets
+  createCustomerTicket: async (formData) => {
+    const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.post('http://localhost:5050/api/customers/tickets', formData, {
+      headers: {
+        Authorization: `Bearer ${customerInfo?.token}`,
+        'Content-Type': 'multipart/form-data',
+      }
+    });
+    return response.data;
+  },
+  getCustomerTickets: async () => {
+    const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.get('http://localhost:5050/api/customers/tickets', {
+      headers: { Authorization: `Bearer ${customerInfo?.token}` }
+    });
+    return response.data;
+  },
+  updateCustomerTicket: async (id, formData) => {
+    const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.put(`http://localhost:5050/api/customers/tickets/${id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${customerInfo?.token}`,
+        'Content-Type': 'multipart/form-data',
+      }
+    });
+    return response.data;
+  },
+  deleteCustomerTicket: async (id) => {
+    const customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.delete(`http://localhost:5050/api/customers/tickets/${id}`, {
       headers: { Authorization: `Bearer ${customerInfo?.token}` }
     });
     return response.data;
@@ -199,6 +235,35 @@ export const api = {
     return callApi(
       () => axiosInstance.delete(`/reviews/${id}`),
       () => mockApi.deleteReview(id)
+    );
+  },
+
+  // Admin Customer Management
+  getAllCustomers: async () => {
+    return callApi(
+      () => axiosInstance.get('/customers'),
+      () => [] // Basic mock
+    );
+  },
+  
+  getAllCustomerTickets: async () => {
+    return callApi(
+      () => axiosInstance.get('/customer-tickets'),
+      () => [] // Basic mock
+    );
+  },
+
+  replyToCustomerTicket: async (id, message) => {
+    return callApi(
+      () => axiosInstance.post(`/customer-tickets/${id}/reply`, { message }),
+      () => ({ _id: id, status: 'Resolved' }) // Basic mock
+    );
+  },
+
+  deleteAdminCustomerTicket: async (id) => {
+    return callApi(
+      () => axiosInstance.delete(`/customer-tickets/${id}`),
+      () => ({ message: 'Deleted' }) // Basic mock
     );
   }
 };
