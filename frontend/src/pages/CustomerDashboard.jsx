@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, CalendarDays, Star, Clock, ChevronDown, X, Trash2 } from 'lucide-react';
+import { LogOut, User, CalendarDays, Star, Clock, ChevronDown, X, Trash2, LifeBuoy } from 'lucide-react';
 import { api } from '../api';
 
 const CustomerDashboard = () => {
@@ -42,7 +42,7 @@ const CustomerDashboard = () => {
       setSuccess('Profile updated successfully!');
       
       const storedInfo = JSON.parse(localStorage.getItem('customerInfo') || '{}');
-      const newInfo = { ...storedInfo, ...updatedData, firstName, secondName, phone };
+      const newInfo = { ...storedInfo, firstName, secondName, phone };
       localStorage.setItem('customerInfo', JSON.stringify(newInfo));
       
       setIsEditMode(false);
@@ -258,6 +258,23 @@ const CustomerDashboard = () => {
           </div>
         </div>
       )}
+
+      {/* Floating Action Button */}
+      <button 
+        onClick={() => navigate('/dashboard/support')}
+        style={{
+          position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 90,
+          width: '60px', height: '60px', borderRadius: '50%',
+          background: 'var(--accent)', color: 'white', border: 'none',
+          boxShadow: 'var(--shadow-glow)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer', transition: 'transform var(--transition-fast)'
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+      >
+        <LifeBuoy size={30} />
+      </button>
+
     </div>
   );
 };

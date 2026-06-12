@@ -10,12 +10,15 @@ import Categories from './pages/Categories';
 import Subscriptions from './pages/Subscriptions';
 import Reviews from './pages/Reviews';
 import SupportTickets from './pages/SupportTickets';
+import CustomerManagement from './pages/CustomerManagement';
+import CustomerSupportTickets from './pages/CustomerSupportTickets';
 
 // Customer / Public components
 import LandingPage from './pages/LandingPage';
 import CustomerRegister from './pages/CustomerRegister';
 import CustomerLogin from './pages/CustomerLogin';
 import CustomerDashboard from './pages/CustomerDashboard';
+import CustomerSupportPage from './pages/CustomerSupportPage';
 
 // --- Admin Layout (requires admin auth) ---
 const AdminLayout = () => {
@@ -42,6 +45,8 @@ const AdminLayout = () => {
       <div className="main-content">
         <Routes>
           <Route path="/" element={<DashboardOverview />} />
+          <Route path="/customers" element={<CustomerManagement />} />
+          <Route path="/customer-tickets" element={<CustomerSupportTickets />} />
           <Route path="/registrations" element={<Registrations />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/subscriptions" element={<Subscriptions />} />
@@ -89,6 +94,11 @@ const AppContent = () => {
       <Route path="/dashboard" element={
         <ProtectedCustomerRoute>
           <CustomerDashboard />
+        </ProtectedCustomerRoute>
+      } />
+      <Route path="/dashboard/support" element={
+        <ProtectedCustomerRoute>
+          <CustomerSupportPage />
         </ProtectedCustomerRoute>
       } />
 

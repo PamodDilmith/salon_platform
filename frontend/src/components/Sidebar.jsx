@@ -11,7 +11,8 @@ import {
   LifeBuoy,
   LogOut,
   Database,
-  ShieldCheck
+  ShieldCheck,
+  Users
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -72,6 +73,14 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
+          to="/admin/customers"
+          className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+        >
+          <Users size={18} />
+          <span>Customer Management</span>
+        </NavLink>
+
+        <NavLink
           to="/admin/registrations"
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
@@ -108,7 +117,7 @@ const Sidebar = () => {
           className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
         >
           <LifeBuoy size={18} />
-          <span>Support Desk</span>
+          <span>Vendor Support</span>
         </NavLink>
       </nav>
 

@@ -3,6 +3,7 @@ const Salon = require('../models/salon');
 const Beautician = require('../models/beautician');
 const Category = require('../models/category');
 const SupportTicket = require('../models/supportTicket');
+const CustomerTicket = require('../models/CustomerTicket');
 const Subscription = require('../models/subscription');
 const Review = require('../models/review');
 const jwt = require('jsonwebtoken');
@@ -65,7 +66,9 @@ const getDashboardStats = async (req, res) => {
     const totalSalons = await Salon.countDocuments();
     const totalBeauticians = await Beautician.countDocuments();
     const activeSubscriptions = await Subscription.countDocuments({ status: 'active' });
-    const openTickets = await SupportTicket.countDocuments({ status: { $ne: 'resolved' } });
+    const openSupportTickets = await SupportTicket.countDocuments({ status: { $ne: 'resolved' } });
+    const openCustomerTickets = await CustomerTicket.countDocuments({ status: 'Pending' });
+    const openTickets = openSupportTickets + openCustomerTickets;
     const totalReviews = await Review.countDocuments();
 
     const pendingSalons = await Salon.countDocuments({ status: 'pending' });
