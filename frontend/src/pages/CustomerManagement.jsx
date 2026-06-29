@@ -34,8 +34,8 @@ const CustomerManagement = () => {
           </h1>
           <p style={{ color: 'var(--text-secondary)', margin: 0 }}>View all registered customers on the platform.</p>
         </div>
-        
-        <button 
+
+        <button
           className="btn btn-primary"
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
           onClick={() => navigate('/admin/customer-tickets')}

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, CalendarDays, Star, Clock, ChevronDown, X, Trash2, LifeBuoy } from 'lucide-react';
+import { LogOut, User, CalendarDays, Star, Clock, ChevronDown, X, Trash2, LifeBuoy, Scissors } from 'lucide-react';
 import { api } from '../api';
 
 const CustomerDashboard = () => {
@@ -27,6 +27,7 @@ const CustomerDashboard = () => {
 
   const quickActions = [
     { icon: <CalendarDays size={24} />, label: 'Book Appointment', desc: 'Find a salon and book your next visit' },
+    { icon: <Scissors size={24} />, label: 'Contact Your Beautician', desc: 'Find and chat with approved beauticians', onClick: () => navigate('/beauticians') },
     { icon: <Clock size={24} />, label: 'My Bookings', desc: 'View your upcoming and past appointments' },
     { icon: <Star size={24} />, label: 'My Reviews', desc: 'Manage your reviews and ratings' },
     { icon: <User size={24} />, label: 'My Profile', desc: 'Update your personal information', onClick: () => { setIsProfileModalOpen(true); setIsDropdownOpen(false); } },

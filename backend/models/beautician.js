@@ -11,6 +11,19 @@ const beauticianSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please add a name'],
     },
+    profilePhotoUrl: {
+      type: String, // Path to uploaded photo
+    },
+    nic: {
+      type: String,
+      required: [true, 'Please provide an NIC'],
+      unique: true,
+      match: [/^([0-9]{9}[vVxX]|[0-9]{12})$/, 'Please provide a valid Sri Lankan NIC'],
+    },
+    roleTitle: {
+      type: String,
+      required: [true, 'Please provide a Position/Role'],
+    },
     description: {
       type: String,
       required: [true, 'Please add a description'],

@@ -63,6 +63,65 @@ export const api = {
     const response = await axios.post('http://localhost:5050/api/customers/register', customerData);
     return response.data;
   },
+  beauticianRegister: async (beauticianData) => {
+    const response = await axios.post('http://localhost:5050/api/beauticians/register', beauticianData);
+    return response.data;
+  },
+  getApprovedBeauticians: async () => {
+    const response = await axios.get('http://localhost:5050/api/beauticians');
+    return response.data;
+  },
+  getBeauticianProfilePublic: async (id) => {
+    const response = await axios.get(`http://localhost:5050/api/beauticians/${id}`);
+    return response.data;
+  },
+  getBeauticianDashboard: async () => {
+    const beauticianInfo = JSON.parse(localStorage.getItem('beauticianInfo'));
+    const response = await axios.get('http://localhost:5050/api/beauticians/profile/me', {
+      headers: { Authorization: `Bearer ${beauticianInfo?.token}` }
+    });
+    return response.data;
+  },
+  updateBeauticianDashboard: async (data) => {
+    const beauticianInfo = JSON.parse(localStorage.getItem('beauticianInfo'));
+    const response = await axios.put('http://localhost:5050/api/beauticians/profile/me', data, {
+      headers: { Authorization: `Bearer ${beauticianInfo?.token}` }
+    });
+    return response.data;
+  },
+  getChatHistory: async (userId) => {
+    // Determine token (could be customer or beautician)
+    const userInfo = JSON.parse(localStorage.getItem('customerInfo')) || JSON.parse(localStorage.getItem('beauticianInfo'));
+    const response = await axios.get(`http://localhost:5050/api/chat/${userId}`, {
+      headers: { Authorization: `Bearer ${userInfo?.token}` }
+    });
+    return response.data;
+  },
+  sendMessage: async (receiverId, content) => {
+    const userInfo = JSON.parse(localStorage.getItem('customerInfo')) || JSON.parse(localStorage.getItem('beauticianInfo'));
+    const response = await axios.post(`http://localhost:5050/api/chat`, { receiverId, content }, {
+      headers: { Authorization: `Bearer ${userInfo?.token}` }
+    });
+    return response.data;
+  },
+  getChatContacts: async () => {
+    const userInfo = JSON.parse(localStorage.getItem('beauticianInfo')) || JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.get(`http://localhost:5050/api/chat/contacts`, {
+      headers: { Authorization: `Bearer ${userInfo?.token}` }
+    });
+    return response.data;
+  },
+  getBeauticianReviews: async (beauticianId) => {
+    const response = await axios.get(`http://localhost:5050/api/reviews/beautician/${beauticianId}`);
+    return response.data;
+  },
+  submitBeauticianReview: async (beauticianId, rating, comment) => {
+    const userInfo = JSON.parse(localStorage.getItem('customerInfo'));
+    const response = await axios.post(`http://localhost:5050/api/reviews/beautician/${beauticianId}`, { rating, comment }, {
+      headers: { Authorization: `Bearer ${userInfo?.token}` }
+    });
+    return response.data;
+  },
   customerLogin: async (email, password) => {
     const response = await axios.post('http://localhost:5050/api/customers/login', { email, password });
     return response.data;
@@ -245,7 +304,7 @@ export const api = {
       () => [] // Basic mock
     );
   },
-  
+
   getAllCustomerTickets: async () => {
     return callApi(
       () => axiosInstance.get('/customer-tickets'),

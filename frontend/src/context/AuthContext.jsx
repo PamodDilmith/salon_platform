@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [admin, setAdmin] = useState(null);
   const [customer, setCustomer] = useState(null);
+  const [beautician, setBeautician] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,6 +18,11 @@ export const AuthProvider = ({ children }) => {
     const storedCustomer = localStorage.getItem('customerInfo');
     if (storedCustomer) {
       setCustomer(JSON.parse(storedCustomer));
+    }
+
+    const storedBeautician = localStorage.getItem('beauticianInfo');
+    if (storedBeautician) {
+      setBeautician(JSON.parse(storedBeautician));
     }
     
     setLoading(false);
@@ -39,6 +45,9 @@ export const AuthProvider = ({ children }) => {
       if (data.role === 'admin') {
         setAdmin(data);
         localStorage.setItem('adminInfo', JSON.stringify(data));
+      } else if (data.role === 'beautician') {
+        setBeautician(data);
+        localStorage.setItem('beauticianInfo', JSON.stringify(data));
       } else {
         setCustomer(data);
         localStorage.setItem('customerInfo', JSON.stringify(data));
@@ -56,11 +65,13 @@ export const AuthProvider = ({ children }) => {
 
   const customerLogout = () => {
     setCustomer(null);
+    setBeautician(null);
     localStorage.removeItem('customerInfo');
+    localStorage.removeItem('beauticianInfo');
   };
 
   return (
-    <AuthContext.Provider value={{ admin, customer, login, customerLogin, logout, customerLogout, loading }}>
+    <AuthContext.Provider value={{ admin, customer, beautician, login, customerLogin, logout, customerLogout, loading }}>
       {children}
     </AuthContext.Provider>
   );
