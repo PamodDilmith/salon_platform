@@ -20,6 +20,12 @@ import CustomerLogin from './pages/CustomerLogin';
 import CustomerDashboard from './pages/CustomerDashboard';
 import CustomerSupportPage from './pages/CustomerSupportPage';
 
+// Beautician components
+import BeauticianRegister from './pages/BeauticianRegister';
+import BeauticianDashboard from './pages/BeauticianDashboard';
+import BeauticianList from './pages/BeauticianList';
+import BeauticianProfilePublic from './pages/BeauticianProfilePublic';
+
 // --- Admin Layout (requires admin auth) ---
 const AdminLayout = () => {
   const { admin, loading } = useContext(AuthContext);
@@ -89,8 +95,11 @@ const AppContent = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={<CustomerRegister />} />
       <Route path="/login" element={<CustomerLogin />} />
-
-      {/* Protected Customer Route */}
+      
+      {/* Beautician Public Routes */}
+      <Route path="/beautician-register" element={<BeauticianRegister />} />
+      
+      {/* Protected Customer Routes */}
       <Route path="/dashboard" element={
         <ProtectedCustomerRoute>
           <CustomerDashboard />
@@ -101,6 +110,19 @@ const AppContent = () => {
           <CustomerSupportPage />
         </ProtectedCustomerRoute>
       } />
+      <Route path="/beauticians" element={
+        <ProtectedCustomerRoute>
+          <BeauticianList />
+        </ProtectedCustomerRoute>
+      } />
+      <Route path="/beauticians/:id" element={
+        <ProtectedCustomerRoute>
+          <BeauticianProfilePublic />
+        </ProtectedCustomerRoute>
+      } />
+
+      {/* Beautician Dashboard Route */}
+      <Route path="/beautician-dashboard" element={<BeauticianDashboard />} />
 
       {/* Admin Routes */}
       <Route path="/admin/*" element={<AdminLayout />} />

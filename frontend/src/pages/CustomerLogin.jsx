@@ -24,6 +24,8 @@ const CustomerLogin = () => {
       const data = await customerLogin(email, password);
       if (data && data.role === 'admin') {
         navigate('/admin');
+      } else if (data && data.role === 'beautician') {
+        navigate('/beautician-dashboard');
       } else {
         navigate('/dashboard');
       }

@@ -99,22 +99,24 @@ const loginCustomer = async (req, res) => {
       return res.status(400).json({ message: 'Please provide email and password' });
     }
 
-    // Check for admin first
-    const adminUser = await User.findOne({ email }).select('+password');
-    if (adminUser && adminUser.role === 'admin' && (await adminUser.matchPassword(password))) {
-      const token = jwt.sign(
-        { id: adminUser._id },
-        process.env.JWT_SECRET,
-        { expiresIn: '30d' }
-      );
-      
-      return res.json({
-        _id: adminUser._id,
-        name: adminUser.name,
-        email: adminUser.email,
-        role: adminUser.role,
-        token
-      });
+    // Check for admin or beautician first
+    const user = await User.findOne({ email }).select('+password');
+    if (user && (await user.matchPassword(password))) {
+      if (user.role === 'admin' || user.role === 'beautician') {
+        const token = jwt.sign(
+          { id: user._id, role: user.role },
+          process.env.JWT_SECRET,
+          { expiresIn: '30d' }
+        );
+        
+        return res.json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          token
+        });
+      }
     }
 
     // Check for customer

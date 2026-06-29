@@ -37,7 +37,10 @@ const LandingPage = () => {
         <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.5rem', cursor: 'pointer' }}>
           Aura<span style={{ color: 'var(--accent)' }}>Glow</span>
         </h2>
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <button className="btn" style={{ background: 'transparent', color: 'var(--text-secondary)', fontSize: '0.9rem', border: 'none', padding: '0.5rem 1rem' }} onClick={() => navigate('/beautician-register')}>
+            For Beauticians
+          </button>
           <button className="btn btn-secondary" style={{ fontSize: '0.9rem' }} onClick={() => navigate('/login')}>
             <LogIn size={16} /> Sign In
           </button>
@@ -98,6 +101,16 @@ const LandingPage = () => {
           >
             I have an account
           </button>
+        </div>
+
+        <div style={{ marginTop: '2.5rem', animation: 'slideUp 0.9s ease', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+          Are you a salon professional?{' '}
+          <span 
+            style={{ color: 'var(--accent)', cursor: 'pointer', fontWeight: 600, textDecoration: 'underline' }} 
+            onClick={() => navigate('/beautician-register')}
+          >
+            Join as a Beautician
+          </span>
         </div>
       </section>
 
